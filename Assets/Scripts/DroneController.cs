@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DroneController : MonoBehaviour {
+    private IControlMode controlMode;
+    public float speed = 10.0f;
+
     public float height { get; private set; }
 
     void Update() {
@@ -12,6 +15,13 @@ public class DroneController : MonoBehaviour {
         }
 
 
+    }
+
+    void Move(Vector2 direction) {
+        direction = direction.normalized;
+        direction *= speed;
+        direction *= Time.deltaTime;
+        controlMode.Move(direction);
     }
 
     (bool, RaycastHit) Raycast() {
