@@ -6,7 +6,7 @@ public class DroneController : MonoBehaviour {
     private IControlMode controlMode;
     public float speed = 10.0f;
 
-    private Vector3 velocity;
+    public Vector3 velocity { get; private set; }
 
     public float height { get; private set; }
 
