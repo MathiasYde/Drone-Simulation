@@ -14,6 +14,11 @@ public class PlayerDroneController : MonoBehaviour {
     private void Start() {
         controls.Main.Move.performed += ctx => controller.Move(ctx.ReadValue<Vector2>());
         controls.Main.Move.canceled += ctx => controller.Move(Vector2.zero);
+        controls.Main.Elevate.performed += ctx => controller.Elevate(ctx.ReadValue<float>());
+        controls.Main.Elevate.canceled += ctx => controller.Elevate(0f);
+
+        controls.Main.Rotate.performed += ctx => controller.Rotate(ctx.ReadValue<float>());
+        controls.Main.Rotate.canceled += ctx => controller.Rotate(0f);
     }
 
     private void OnEnable() {
