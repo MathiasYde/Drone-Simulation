@@ -6,6 +6,8 @@ public class DroneController : MonoBehaviour {
     private IControlMode controlMode;
     public float speed = 10.0f;
 
+    private Vector3 velocity;
+
     public float height { get; private set; }
 
     private void Awake() {
@@ -17,13 +19,15 @@ public class DroneController : MonoBehaviour {
         if (success) {
             height = hit.distance;
         }
+
+        controlMode.Move(velocity * Time.deltaTime);
     }
 
     public void Move(Vector2 direction) {
         direction = direction.normalized;
         direction *= speed;
-        direction *= Time.deltaTime;
-        controlMode.Move(direction);
+
+        velocity = direction;
     }
 
     (bool, RaycastHit) Raycast() {

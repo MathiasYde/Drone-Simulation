@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class ManualControlMode : MonoBehaviour, IControlMode {
     public void Move(Vector2 direction) {
-        Debug.Log($"Moving {direction}");
+        transform.position += direction.plane();
     }
 }
