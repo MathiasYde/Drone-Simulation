@@ -8,16 +8,18 @@ public class DroneController : MonoBehaviour {
 
     public float height { get; private set; }
 
-    void Update() {
+    private void Awake() {
+        controlMode = controlMode ?? GetComponent<IControlMode>();
+    }
+
+    private void Update() {
         (bool success, RaycastHit hit) = Raycast();
         if (success) {
             height = hit.distance;
         }
-
-
     }
 
-    void Move(Vector2 direction) {
+    public void Move(Vector2 direction) {
         direction = direction.normalized;
         direction *= speed;
         direction *= Time.deltaTime;
