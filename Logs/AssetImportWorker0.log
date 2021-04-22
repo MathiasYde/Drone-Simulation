@@ -1016,3 +1016,23 @@ Received Import Request.
   path: Assets/FurnishedCabin/Materials/Bathroom_Oven_MAT_MetallicSmoothness.mat
   artifactKey: Guid(fbc0db2d086fd2541bd5967f805e8034) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/FurnishedCabin/Materials/Bathroom_Oven_MAT_MetallicSmoothness.mat using Guid(fbc0db2d086fd2541bd5967f805e8034) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3f3f4b02459053b82707e9c12ef54a9f') in 0.015763 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001216 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.43 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.852 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.37 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1611 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 282.1 MB.
+System memory in use after: 282.2 MB.
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 2746.
+Total: 2.970500 ms (FindLiveObjects: 0.334800 ms CreateObjectMapping: 0.104300 ms MarkObjects: 2.509600 ms  DeleteObjects: 0.019600 ms)
+
