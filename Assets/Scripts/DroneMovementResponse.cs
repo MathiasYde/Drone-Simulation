@@ -10,10 +10,11 @@ public class DroneMovementResponse : MonoBehaviour {
 
     public float rotationMultiplier = 30.0f;
     public float rotationSpeedMultiplier = 1.0f;
-    public float audioVolumeSpeedMultiplier = 1.0f;
+    //public float audioVolumeSpeedMultiplier = 1.0f;
     private Quaternion desiredRotation;
 
     private AudioSource audioSource;
+    public AnimationCurve audioCurve;
 
     private void Start() {
         controller = controller ?? GetComponent<DroneController>();
@@ -26,12 +27,11 @@ public class DroneMovementResponse : MonoBehaviour {
     private void Update() {
         velocity = controller.velocity;
 
-        desiredRotation = Quaternion.Euler(velocity.y * rotationMultiplier, 0, -velocity.x * rotationMultiplier);
+        desiredRotation = Quaternion.Euler(velocity.z * rotationMultiplier, 0, -velocity.x * rotationMultiplier);
         transform.localRotation = Quaternion.Lerp(transform.localRotation, desiredRotation, Time.deltaTime * rotationSpeedMultiplier);
 
         transform.localPosition += new Vector3(0f, Mathf.Sin(Time.realtimeSinceStartup * frequency) * amplitude, 0.0f);
 
-        audioSource.volume = Mathf.Lerp(audioSource.volume, velocity.normalized.magnitude, Time.deltaTime * audioVolumeSpeedMultiplier);
+        audioSource.volume = audioCurve.Evaluate(velocity.normalized.magnitude);
     }
-
 }
