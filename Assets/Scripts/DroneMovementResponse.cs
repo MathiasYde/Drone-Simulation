@@ -10,7 +10,7 @@ public class DroneMovementResponse : MonoBehaviour {
 
     public float rotationMultiplier = 30.0f;
     public float rotationSpeedMultiplier = 1.0f;
-    //public float audioVolumeSpeedMultiplier = 1.0f;
+    public float audioVolumeSpeedMultiplier = 1.0f;
     private Quaternion desiredRotation;
 
     private AudioSource audioSource;
@@ -32,6 +32,7 @@ public class DroneMovementResponse : MonoBehaviour {
 
         transform.localPosition += new Vector3(0f, Mathf.Sin(Time.realtimeSinceStartup * frequency) * amplitude, 0.0f);
 
-        audioSource.volume = audioCurve.Evaluate(velocity.normalized.magnitude);
+        audioSource.volume = Mathf.Lerp(audioSource.volume, velocity.normalized.magnitude, Time.deltaTime * audioVolumeSpeedMultiplier);
+        //audioSource.volume = audioCurve.Evaluate(velocity.normalized.magnitude);
     }
 }
