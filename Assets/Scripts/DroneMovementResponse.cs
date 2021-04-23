@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DroneMovementResponse : MonoBehaviour {
     private DroneController controller;
-    private Vector3 velocity;
+
     public float amplitude = 0.001f;
     public float frequency = 0.5f;
 
@@ -14,7 +14,7 @@ public class DroneMovementResponse : MonoBehaviour {
     private Quaternion desiredRotation;
 
     private AudioSource audioSource;
-    public AnimationCurve audioCurve;
+    //public AnimationCurve audioCurve;
 
     private void Start() {
         controller = controller ?? GetComponent<DroneController>();
@@ -25,8 +25,10 @@ public class DroneMovementResponse : MonoBehaviour {
     }
 
     private void Update() {
-        velocity = controller.velocity;
+        Vector3 velocity = controller.velocity;
+        bool isFlipped = controller.isFlipped;
 
+        velocity.x *= isFlipped ? -1 : 1;
         desiredRotation = Quaternion.Euler(velocity.z * rotationMultiplier, 0, -velocity.x * rotationMultiplier);
         transform.localRotation = Quaternion.Lerp(transform.localRotation, desiredRotation, Time.deltaTime * rotationSpeedMultiplier);
 

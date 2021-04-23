@@ -41,6 +41,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Flip"",
+                    ""type"": ""Button"",
+                    ""id"": ""ed7c71a3-d789-4f0f-b372-26b341982431"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -164,6 +172,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""75103c22-b5f4-42f8-81ef-a50fad0a09a6"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Flip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -187,6 +206,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Main_Move = m_Main.FindAction("Move", throwIfNotFound: true);
         m_Main_Elevate = m_Main.FindAction("Elevate", throwIfNotFound: true);
         m_Main_Rotate = m_Main.FindAction("Rotate", throwIfNotFound: true);
+        m_Main_Flip = m_Main.FindAction("Flip", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -239,6 +259,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Main_Move;
     private readonly InputAction m_Main_Elevate;
     private readonly InputAction m_Main_Rotate;
+    private readonly InputAction m_Main_Flip;
     public struct MainActions
     {
         private @Controls m_Wrapper;
@@ -246,6 +267,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Move => m_Wrapper.m_Main_Move;
         public InputAction @Elevate => m_Wrapper.m_Main_Elevate;
         public InputAction @Rotate => m_Wrapper.m_Main_Rotate;
+        public InputAction @Flip => m_Wrapper.m_Main_Flip;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -264,6 +286,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Rotate.started -= m_Wrapper.m_MainActionsCallbackInterface.OnRotate;
                 @Rotate.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnRotate;
                 @Rotate.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnRotate;
+                @Flip.started -= m_Wrapper.m_MainActionsCallbackInterface.OnFlip;
+                @Flip.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnFlip;
+                @Flip.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnFlip;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -277,6 +302,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Rotate.started += instance.OnRotate;
                 @Rotate.performed += instance.OnRotate;
                 @Rotate.canceled += instance.OnRotate;
+                @Flip.started += instance.OnFlip;
+                @Flip.performed += instance.OnFlip;
+                @Flip.canceled += instance.OnFlip;
             }
         }
     }
@@ -295,5 +323,6 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnElevate(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
+        void OnFlip(InputAction.CallbackContext context);
     }
 }
