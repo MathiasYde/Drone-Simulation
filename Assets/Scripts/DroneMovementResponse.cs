@@ -29,10 +29,23 @@ public class DroneMovementResponse : MonoBehaviour {
         bool isFlipped = controller.isFlipped;
 
         velocity.x *= isFlipped ? -1 : 1;
-        desiredRotation = Quaternion.Euler(velocity.z * rotationMultiplier, 0, -velocity.x * rotationMultiplier);
-        transform.localRotation = Quaternion.Lerp(transform.localRotation, desiredRotation, Time.deltaTime * rotationSpeedMultiplier);
+        desiredRotation = Quaternion.Euler(
+            velocity.z * rotationMultiplier + (isFlipped ? 180f : 0),
+            0,
+            -velocity.x * rotationMultiplier
+        );
 
-        transform.localPosition += new Vector3(0f, Mathf.Sin(Time.realtimeSinceStartup * frequency) * amplitude, 0.0f);
+        transform.localRotation = Quaternion.Lerp(
+            transform.localRotation,
+            desiredRotation,
+            Time.deltaTime * rotationSpeedMultiplier
+        );
+
+        transform.localPosition += new Vector3(
+            0f,
+            Mathf.Sin(Time.realtimeSinceStartup * frequency) * amplitude,
+            0.0f
+        );
 
         audioSource.volume = Mathf.Lerp(audioSource.volume, velocity.normalized.magnitude, Time.deltaTime * audioVolumeSpeedMultiplier);
         //audioSource.volume = audioCurve.Evaluate(velocity.normalized.magnitude);

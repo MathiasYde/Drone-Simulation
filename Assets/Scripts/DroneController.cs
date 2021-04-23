@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DroneController : MonoBehaviour {
+    [SerializeField] private Transform model;
+
     public float moveSpeed = 10.0f;
     public float rotateSpeed = 10.0f;
     public float elevationSpeed = 10.0f;
@@ -35,15 +37,15 @@ public class DroneController : MonoBehaviour {
         transform.position = Vector3.SmoothDamp(transform.position, destination, ref _vel, movementSmoothing);
         velocity = _vel;
 
-        transform.rotation = Quaternion.Lerp(
-            transform.rotation,
-            Quaternion.Euler(
-                transform.rotation.x,// + ((isFlipped) ? 180f : 0f),
-                transform.rotation.y,
-                transform.rotation.z
-            ),
-            Time.deltaTime * flipSpeed
-        );
+        //model.rotation = Quaternion.Lerp(
+        //    model.rotation,
+        //    Quaternion.Euler(
+        //        model.rotation.x + ((isFlipped) ? 180f : 0f),
+        //        model.rotation.y,
+        //        model.rotation.z
+        //    ),
+        //    Time.deltaTime * flipSpeed
+        //);
         transform.Rotate(0f, rotation * rotateSpeed * Time.deltaTime, 0f);
     }
 
