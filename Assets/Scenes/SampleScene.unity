@@ -552,6 +552,7 @@ MonoBehaviour:
   frequency: 0.5
   rotationMultiplier: 1.40625
   rotationSpeedMultiplier: 8
+  audioVolumeSpeedMultiplier: 1
   audioCurve:
     serializedVersion: 2
     m_Curve: []
