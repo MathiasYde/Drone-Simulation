@@ -1,23 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
-public class CameraFollow : MonoBehaviour  {
-   
-    public Transform Drone;
+public class CameraFollow : MonoBehaviour
+{
+    [SerializeField]
+    private Transform target;
 
-    public float smoothSpeed = 0.125f;
-    public Vector3 offset;
+    [SerializeField]
+    private Vector3 offsetPosition;
 
-    public 
+    [SerializeField]
+    private Space offsetPositionSpace = Space.Self;
 
-    // LateUpdate er det samme som update den gør det bare efter update.
-    void LateUpdate()
+    [SerializeField]
+    private bool lookAt = true;
+
+    private void Update()
     {
-        Vector3 desiredPosition = Drone.position + offset;
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-        transform.position = smoothedPosition;
+        Refresh();
+    }
 
+    public void Refresh()
+    {
+        if (target == null)
+        {
+            Debug.LogWarning("Missing target ref !", this);
+
+            return;
+        }
+
+        // compute position
+        if (offsetPositionSpace == Space.Self)
+        {
+            transform.position = target.TransformPoint(offsetPosition);
+        }
+        else
+        {
+            transform.position = target.position + offsetPosition;
+        }
+
+        // compute rotation
+        if (lookAt)
+        {
+            transform.LookAt(target);
+        }
+        else
+        {
+            transform.rotation = target.rotation;
+        }
     }
 }
-
