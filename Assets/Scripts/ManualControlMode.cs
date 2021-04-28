@@ -24,6 +24,8 @@ public class ManualControlMode : MonoBehaviour {
         controls.Main.Rotate.canceled += ctx => controller.Rotate(0f);
 
         controls.Main.Flip.performed += ctx => controller.Flip();
+
+        controls.Main.Grab.performed += ctx => controller.Grab();
     }
 
     private void OnEnable() {

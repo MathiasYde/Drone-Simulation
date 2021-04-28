@@ -49,6 +49,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Grab"",
+                    ""type"": ""Button"",
+                    ""id"": ""8bdc1267-a97c-4a46-968c-dd181347743b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -183,6 +191,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""Flip"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e74ba6f-da3a-4bd6-b212-1041256478c6"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Grab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -207,6 +226,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Main_Elevate = m_Main.FindAction("Elevate", throwIfNotFound: true);
         m_Main_Rotate = m_Main.FindAction("Rotate", throwIfNotFound: true);
         m_Main_Flip = m_Main.FindAction("Flip", throwIfNotFound: true);
+        m_Main_Grab = m_Main.FindAction("Grab", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -260,6 +280,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Main_Elevate;
     private readonly InputAction m_Main_Rotate;
     private readonly InputAction m_Main_Flip;
+    private readonly InputAction m_Main_Grab;
     public struct MainActions
     {
         private @Controls m_Wrapper;
@@ -268,6 +289,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Elevate => m_Wrapper.m_Main_Elevate;
         public InputAction @Rotate => m_Wrapper.m_Main_Rotate;
         public InputAction @Flip => m_Wrapper.m_Main_Flip;
+        public InputAction @Grab => m_Wrapper.m_Main_Grab;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -289,6 +311,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Flip.started -= m_Wrapper.m_MainActionsCallbackInterface.OnFlip;
                 @Flip.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnFlip;
                 @Flip.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnFlip;
+                @Grab.started -= m_Wrapper.m_MainActionsCallbackInterface.OnGrab;
+                @Grab.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnGrab;
+                @Grab.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnGrab;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -305,6 +330,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Flip.started += instance.OnFlip;
                 @Flip.performed += instance.OnFlip;
                 @Flip.canceled += instance.OnFlip;
+                @Grab.started += instance.OnGrab;
+                @Grab.performed += instance.OnGrab;
+                @Grab.canceled += instance.OnGrab;
             }
         }
     }
@@ -324,5 +352,6 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnElevate(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
         void OnFlip(InputAction.CallbackContext context);
+        void OnGrab(InputAction.CallbackContext context);
     }
 }
