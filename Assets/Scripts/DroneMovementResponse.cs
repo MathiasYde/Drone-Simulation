@@ -17,10 +17,10 @@ public class DroneMovementResponse : MonoBehaviour {
     //public AnimationCurve audioCurve;
 
     private void Start() {
-        controller = controller ?? GetComponent<DroneController>();
-        controller = controller ?? transform.parent.GetComponent<DroneController>();
+        controller ??= GetComponent<DroneController>();
+        controller ??= transform.parent.GetComponent<DroneController>();
 
-        audioSource = audioSource ?? GetComponent<AudioSource>();
+        audioSource ??= GetComponent<AudioSource>();
         audioSource.loop = true;
     }
 
