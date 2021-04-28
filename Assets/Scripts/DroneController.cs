@@ -5,7 +5,7 @@ using UnityEngine;
 public class DroneController : MonoBehaviour {
     [SerializeField] private Transform model;
 
-    public LayerMask packageMask;
+    public string grabblableTag = "Grabbable";
     public GameObject grabbedItem;
 
     public float moveSpeed = 10.0f;
@@ -53,9 +53,28 @@ public class DroneController : MonoBehaviour {
     public void Rotate(float rotation) { this.rotation = rotation; }
     public void Flip() { isFlipped = !isFlipped; }
     public void Grab() {
-        RaycastHit hit;
-        if (Physics.SphereCast(transform.position, 2, -Vector3.up, out hit, packageMask)) {
-            grabbedItem = hit.transform.gameObject;
+        if (grabbedItem != null) {
+            grabbedItem.transform.SetParent(null);
+            if (grabbedItem.TryGetComponent(out Rigidbody rb)) {
+                rb.isKinematic = false;
+            }
+            grabbedItem = null;
+            return;
+        }
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 2.5f);
+        foreach (Collider collider in colliders) {
+            if (collider.transform.tag.Contains(grabblableTag)) {
+                grabbedItem = collider.transform.gameObject;
+                collider.transform.SetParent(transform);
+                collider.transform.localPosition = -Vector3.up;
+                
+                if (collider.TryGetComponent(out Rigidbody rb)) {
+                    rb.isKinematic = true;
+                }
+
+                break;
+            }
         }
     }
 }
